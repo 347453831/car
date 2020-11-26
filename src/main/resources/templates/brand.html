@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>汽车品牌管理</title>
+		<meta name="keywords" content="">
+    	<meta name="description" content="">
+		<link rel="shortcut icon" href="favicon.ico">
+        <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    	<link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    	<!-- Data Tables -->
+   		<link href="/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    	<link href="/css/animate.css" rel="stylesheet">
+    	<link href="/css/style.css?v=4.1.0" rel="stylesheet">
+	</head>
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			 <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>汽车品牌</h5>
+                    </div>
+                    <div class="col-sm-5 ibox-content">
+						<a href="add_brand.html" class="btn btn-info"><i class="fa fa-plus"></i>添加品牌</a>
+					</div>
+                    <div class="ibox-content">
+						
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>品牌姓名</th>
+                                    <th>品牌Logo</th>
+                                    <th>添加时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>奥迪</td>
+                                    <td>
+                                    	<img alt="" src="image/logo/aodi.jpg" width="50px">
+                                    </td>
+                                    <td>1988-11-25</td>
+                                    <td>
+                                		<a class="btn btn-info" href="update_brand.html" title="修改"><i class="fa fa-pencil"></i></a>
+                               			<a class="btn btn-primary" href="" title="删除"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>奥迪</td>
+                                    <td>
+                                    	<img alt="" src="image/logo/aodi.jpg" width="50px">
+                                    </td>
+                                    <td>1988-11-25</td>
+                                    <td>
+                                		<a class="btn btn-info" href="update_brand.html" title="修改"><i class="fa fa-pencil"></i></a>
+                               			<a class="btn btn-primary" href="" title="删除"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>奥迪</td>
+                                    <td>
+                                    	<img alt="" src="image/logo/aodi.jpg" width="50px">
+                                    </td>
+                                    <td>1988-11-25</td>
+                                    <td>
+                                		<a class="btn btn-info" href="update_brand.html" title="修改"><i class="fa fa-pencil"></i></a>
+                               			<a class="btn btn-primary" href="" title="删除"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>奥迪</td>
+                                    <td>
+                                    	<img alt="" src="image/logo/aodi.jpg" width="50px">
+                                    </td>
+                                    <td>1988-11-25</td>
+                                    <td>
+                                		<a class="btn btn-info" href="update_brand.html" title="修改"><i class="fa fa-pencil"></i></a>
+                               			<a class="btn btn-primary" href="" title="删除"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                               <tr>
+                                    <td>奥迪</td>
+                                    <td>
+                                    	<img alt="" src="image/logo/aodi.jpg" width="50px">
+                                    </td>
+                                    <td>1988-11-25</td>
+                                    <td>
+                                		<a class="btn btn-info" href="update_brand.html" title="修改"><i class="fa fa-pencil"></i></a>
+                               			<a class="btn btn-primary" href="" title="删除"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                               <tr>
+                                    <td>奥迪</td>
+                                    <td>
+                                    	<img alt="" src="image/logo/aodi.jpg" width="50px">
+                                    </td>
+                                    <td>1988-11-25</td>
+                                    <td>
+                                		<a class="btn btn-info" href="update_brand.html" title="修改"><i class="fa fa-pencil"></i></a>
+                               			<a class="btn btn-primary" href="" title="删除"><i class="fa fa-trash-o"></i></a>
+                                    </td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+						
+						<div class="btn-group">
+								<div class="btn-group">
+									<button type="button" class="btn btn-white">
+	                                	首页
+	                                </button>
+	                                <button type="button" class="btn btn-white">
+	                                	<i class="fa fa-chevron-left"></i>
+	                                </button>
+	                                <button class="btn btn-white active">1</button>
+	                                <button class="btn btn-white">2</button>
+	                                <button class="btn btn-white">3</button>
+	                                <button class="btn btn-white">4</button>
+	                                <button type="button" class="btn btn-white">
+	                                	<i class="fa fa-chevron-right"></i>
+	                                </button>
+	                                <button type="button" class="btn btn-white">
+	                                	尾页
+	                                </button>                                           
+	                        </div>
+	                        &nbsp;&nbsp;第1页/共4页
+                    </div>
+                </div>
+            </div>
+        </div>
+		</div>
+	
+		<!-- 全局js -->
+		<script src="js/jquery.min.js?v=2.1.4"></script>
+		<script src="js/bootstrap.min.js?v=3.3.6"></script>
+	    <!-- 自定义js -->
+	    <script src="js/content.js?v=1.0.0"></script>
+	    <!-- Page-Level Scripts -->
+	    <script>
+	        $(document).ready(function () {
+	            $('.dataTables-example').dataTable();
+	
+	            /* Init DataTables */
+	            var oTable = $('#editable').dataTable();
+	
+	            /* Apply the jEditable handlers to the table */
+	            oTable.$('td').editable('../example_ajax.php', {
+	                "callback": function (sValue, y) {
+	                    var aPos = oTable.fnGetPosition(this);
+	                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+	                },
+	                "submitdata": function (value, settings) {
+	                    return {
+	                        "row_id": this.parentNode.getAttribute('id'),
+	                        "column": oTable.fnGetPosition(this)[2]
+	                    };
+	                },
+	                "width": "90%",
+	                "height": "100%"
+	            });
+	        });
+	    </script>
+	</body>
+</html>

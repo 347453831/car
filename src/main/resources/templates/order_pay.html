@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在租订单</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>在租订单</h5>
+                </div>
+                <div class="col-sm-12 ibox-content">
+                    <form action="/order/selOrderByManyconditions" method="post">
+                        按姓名关键字：<input type="text" name="username" placeholder="请输入会员姓名" style="height:30px;"/>
+                        &nbsp;&nbsp;
+                        按时间：<input type="date" name="startTime" style="height:30px;"/>到<input type="date" name="endTime"
+                                                                                              style="height:30px;"/>
+                        &nbsp;&nbsp;
+                        按手机号：<input type="text" name="phone" placeholder="请输入会员手机号" style="height:30px;"/>
+                        &nbsp;&nbsp;
+                        <button type="submit" class="btn btn-info"><i class="fa fa-search"></i>搜索</button>
+                    </form>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>会员姓名</th>
+                            <th>手机号</th>
+                            <th>租用车辆</th>
+                            <th>取车时间</th>
+                            <th>还车时间</th>
+                            <th>取车门店</th>
+                            <th>单价</th>
+                            <th>总价</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody th:if="${msg!=null}">
+                        <tr>
+                            <td th:colspan="10" style="text-align: center">
+                                <font color="red" size="5">
+                                    查询数据为空</font></td>
+                        </tr>
+                        </tbody>
+                        <tbody th:if="${orders!=null}">
+                        <tr th:each="order:${orders}">
+                            <td th:text="${order.getOrderNo()}"></td>
+                            <td th:text="${order.getOrderName()}"></td>
+                            <td th:text="${order.getOrderPhone()}"></td>
+                            <td th:text="${order.getOrderCar()}">
+                            </td>
+                            <td th:text="${#dates.format(order.getOrderStarttime(),'yyyy-MM-dd')}"></td>
+                            <td th:text="${#dates.format(order.getOrderEndtime(),'yyyy-MM-dd')}">
+
+                                <a href="order_goon.html">续租</a>
+                            </td>
+                            <td th:text="${order.getOrderStores()}"></td>
+                            <td th:text="${order.getOrderPrice()}+'元/天'"></td>
+                            <td th:text="${order.getOrderSumprice()+'元'}"></td>
+                            <td>
+                                <a class="btn btn-success"
+                                   th:href="@{/order/selectOrderByNo(orderNo=${order.getOrderNo()})}"><i
+                                        class="fa fa-history"></i>还车</a>
+                                <a class="btn btn-default" href="order_mess.html">详情</a>
+                            </td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-white">
+                            首页
+                        </button>
+                        <button type="button" class="btn btn-white">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-white active">1</button>
+                        <button class="btn btn-white">2</button>
+                        <button class="btn btn-white">3</button>
+                        <button class="btn btn-white">4</button>
+                        <button type="button" class="btn btn-white">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button type="button" class="btn btn-white">
+                            尾页
+                        </button>
+                    </div>
+                    &nbsp;&nbsp;第1页/共4页
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<!-- Data Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function () {
+        $('.dataTables-example').dataTable();
+
+        /* Init DataTables */
+        var oTable = $('#editable').dataTable();
+
+        /* Apply the jEditable handlers to the table */
+        oTable.$('td').editable('../example_ajax.php', {
+            "callback": function (sValue, y) {
+                var aPos = oTable.fnGetPosition(this);
+                oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            },
+            "submitdata": function (value, settings) {
+                return {
+                    "row_id": this.parentNode.getAttribute('id'),
+                    "column": oTable.fnGetPosition(this)[2]
+                };
+            },
+            "width": "90%",
+            "height": "100%"
+        });
+    });
+</script>
+</body>
+</html>

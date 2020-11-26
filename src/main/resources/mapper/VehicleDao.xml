@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengf.carrental.dao.VehicleDao">
+    <resultMap id="BaseResultMap" type="com.fengf.carrental.entity.Vehicle">
+        <!--@Table vehicle-->
+        <result property="vehicleId" column="vehicle_id" jdbcType="INTEGER"/>
+        <result property="vehicleNum" column="vehicle_num" jdbcType="VARCHAR"/>
+        <result property="vehicleType" column="vehicle_type" jdbcType="VARCHAR"/>
+        <result property="vehiclePeoplenum" column="vehicle_peoplenum" jdbcType="INTEGER"/>
+        <result property="vehiclePrice" column="vehicle_price" jdbcType="NUMERIC"/>
+        <result property="vehicleDate" column="vehicle_date" jdbcType="OTHER"/>
+        <result property="vehicleStore" column="vehicle_store" jdbcType="VARCHAR"/>
+        <result property="vehicleStatu" column="vehicle_statu" jdbcType="INTEGER"/>
+        <result property="vehicleSituation" column="vehicle_situation" jdbcType="INTEGER"/>
+        <result property="vehicleChesun" column="vehicle_chesun" jdbcType="INTEGER"/>
+        <result property="vehicleIntroduce" column="vehicle_introduce" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        vehicle_id,
+        vehicle_num,
+        vehicle_type,
+        vehicle_peoplenum,
+        vehicle_price,
+        vehicle_date,
+        vehicle_store,
+        vehicle_statu,
+        vehicle_situation,
+        vehicle_chesun,
+        vehicle_introduce
+    </sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select vehicle_id,
+               vehicle_num,
+               vehicle_type,
+               vehicle_peoplenum,
+               vehicle_price,
+               vehicle_date,
+               vehicle_store,
+               vehicle_statu,
+               vehicle_situation,
+               vehicle_chesun,
+               vehicle_introduce
+        from car.vehicle
+        where vehicle_id = #{vehicleId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select vehicle_id,
+               vehicle_num,
+               vehicle_type,
+               vehicle_peoplenum,
+               vehicle_price,
+               vehicle_date,
+               vehicle_store,
+               vehicle_statu,
+               vehicle_situation,
+               vehicle_chesun,
+               vehicle_introduce
+        from car.vehicle
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select vehicle_id,
+               vehicle_cart,
+               vehicle_peoplenum,
+               vehicle_price,
+               vehicle_date,
+               vehicle_store,
+               vehicle_statu,
+               vehicle_situation,
+               vehicle_chesun,
+               vehicle_introduce
+        from car.vehicle
+        <where>
+            <if test="vehicleId != null">
+                and vehicle_id = #{vehicleId}
+            </if>
+            <if test="vehicleNum != null and vehicleNum != ''">
+                and vehicle_cart = #{vehicleNum}
+            </if>
+            <if test="vehicleType != null and vehicleType != ''">
+                and vehicle_cart = #{vehicleType}
+            </if>
+            <if test="vehiclePeoplenum != null">
+                and vehicle_peoplenum = #{vehiclePeoplenum}
+            </if>
+            <if test="vehiclePrice != null">
+                and vehicle_price = #{vehiclePrice}
+            </if>
+            <if test="vehicleDate != null">
+                and vehicle_date = #{vehicleDate}
+            </if>
+            <if test="vehicleStore != null and vehicleStore != ''">
+                and vehicle_store = #{vehicleStore}
+            </if>
+            <if test="vehicleStatu != null">
+                and vehicle_statu = #{vehicleStatu}
+            </if>
+            <if test="vehicleSituation != null">
+                and vehicle_situation = #{vehicleSituation}
+            </if>
+            <if test="vehicleChesun != null">
+                and vehicle_chesun = #{vehicleChesun}
+            </if>
+            <if test="vehicleIntroduce != null">
+                and vehicle_introduce = #{vehicleIntroduce}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="vehicleId" useGeneratedKeys="true">
+        insert into car.vehicle(vehicle_num, vehicle_type, vehicle_peoplenum, vehicle_price, vehicle_date, vehicle_store, vehicle_statu, vehicle_situation,vehicle_chesun,vehicle_introduce)
+        values (#{vehicleNum}, #{vehicleType}, #{vehiclePeoplenum}, #{vehiclePrice}, now(), #{vehicleStore}, 0, 0,
+                #{vehicleChesun}, #{vehicleIntroduce})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update car.vehicle
+        <set>
+            <if test="vehicleNum != null and vehicleNum != ''">
+                vehicle_cart = #{vehicleNum},
+            </if>
+            <if test="vehicleType != null and vehicleType != ''">
+                vehicle_cart = #{vehicleType},
+            </if>
+            <if test="vehiclePeoplenum != null">
+                vehicle_peoplenum = #{vehiclePeoplenum},
+            </if>
+            <if test="vehiclePrice != null">
+                vehicle_price = #{vehiclePrice},
+            </if>
+            <if test="vehicleDate != null">
+                vehicle_date = #{vehicleDate},
+            </if>
+            <if test="vehicleStore != null and vehicleStore != ''">
+                vehicle_store = #{vehicleStore},
+            </if>
+            <if test="vehicleStatu != null">
+                vehicle_statu = #{vehicleStatu},
+            </if>
+            <if test="vehicleSituation != null">
+                vehicle_situation = #{vehicleSituation},
+            </if>
+            <if test="vehicleChesun != null">
+                vehicle_chesun = #{vehicleChesun},
+            </if>
+            <if test="vehicleIntroduce != null">
+                vehicle_introduce = #{vehicleIntroduce},
+            </if>
+        </set>
+        where vehicle_id = #{vehicleId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from car.vehicle
+        where vehicle_id = #{vehicleId}
+    </delete>
+    <select id="queryAllVehicle" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from vehicle
+    </select>
+<!--auto generated by MybatisCodeHelper on 2020-10-22-->
+    <select id="findOneByVehicleNum" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from vehicle
+        where vehicle_num=#{vehicleNum,jdbcType=VARCHAR}
+    </select>
+<!--auto generated by MybatisCodeHelper on 2020-10-22-->
+    <update id="updateByVehicleNum" >
+        update vehicle
+        <set>
+            <if test="updated.vehicleId != null">
+                vehicle_id = #{updated.vehicleId,jdbcType=INTEGER},
+            </if>
+            <if test="updated.vehicleNum != null">
+                vehicle_num = #{updated.vehicleNum,jdbcType=VARCHAR},
+            </if>
+            <if test="updated.vehicleType != null">
+                vehicle_type = #{updated.vehicleType,jdbcType=VARCHAR},
+            </if>
+            <if test="updated.vehiclePeoplenum != null">
+                vehicle_peoplenum = #{updated.vehiclePeoplenum,jdbcType=INTEGER},
+            </if>
+            <if test="updated.vehiclePrice != null">
+                vehicle_price = #{updated.vehiclePrice,jdbcType=NUMERIC},
+            </if>
+            <if test="updated.vehicleDate != null">
+                vehicle_date = #{updated.vehicleDate,jdbcType=OTHER},
+            </if>
+            <if test="updated.vehicleStore != null">
+                vehicle_store = #{updated.vehicleStore,jdbcType=VARCHAR},
+            </if>
+            <if test="updated.vehicleStatu != null">
+                vehicle_statu = #{updated.vehicleStatu,jdbcType=INTEGER},
+            </if>
+            <if test="updated.vehicleSituation != null">
+                vehicle_situation = #{updated.vehicleSituation,jdbcType=INTEGER},
+            </if>
+            <if test="updated.vehicleChesun != null">
+                vehicle_chesun = #{updated.vehicleChesun,jdbcType=INTEGER},
+            </if>
+            <if test="updated.vehicleIntroduce != null">
+                vehicle_introduce = #{updated.vehicleIntroduce,jdbcType=INTEGER},
+            </if>
+        </set>
+        where vehicle_num=#{vehicleNum,jdbcType=VARCHAR}
+    </update>
+<!--auto generated by MybatisCodeHelper on 2020-10-22-->
+    <select id="findAllByVehicleSituation" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from vehicle
+        where vehicle_situation=1
+    </select>
+</mapper>

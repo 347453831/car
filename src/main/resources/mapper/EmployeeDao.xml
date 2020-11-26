@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengf.carrental.dao.EmployeeDao">
+    <sql id="Base_Column_List">
+        employee_id,
+        employee_name,
+        employee_sex,
+        employee_birthday,
+        employee_induction_time,
+        employee_number,
+        employee_phone,
+        employee_store,
+        employee_position,
+        employee_password
+    </sql>
+    <resultMap id="BaseResultMap" type="com.fengf.carrental.entity.Employee">
+        <!--@Table employee-->
+        <result property="employeeId" column="employee_id" jdbcType="INTEGER"/>
+        <result property="employeeName" column="employee_name" jdbcType="VARCHAR"/>
+        <result property="employeeSex" column="employee_sex" jdbcType="INTEGER"/>
+        <result property="employeeBirthday" column="employee_birthday" jdbcType="DATE"/>
+        <result property="employeeInductionTime" column="employee_induction_time" jdbcType="DATE"/>
+        <result property="employeeNumber" column="employee_number" jdbcType="VARCHAR"/>
+        <result property="employeePhone" column="employee_phone" jdbcType="VARCHAR"/>
+        <result property="employeeStore" column="employee_store" jdbcType="VARCHAR"/>
+        <result property="employeePosition" column="employee_position" jdbcType="INTEGER"/>
+        <result property="employeePassword" column="employee_password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select employee_id,
+               employee_name,
+               employee_sex,
+               employee_birthday,
+               employee_induction_time,
+               employee_number,
+               employee_phone,
+               employee_store,
+               employee_position,
+               employee_password
+        from car.employee
+        where employee_id = #{employeeId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select employee_id,
+               employee_name,
+               employee_sex,
+               employee_birthday,
+               employee_induction_time,
+               employee_number,
+               employee_phone,
+               employee_store,
+               employee_position,
+               employee_password
+        from car.employee
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select employee_id,
+               employee_name,
+               employee_sex,
+               employee_birthday,
+               employee_induction_time,
+               employee_number,
+               employee_phone,
+               employee_store,
+               employee_position,
+               employee_password
+        from car.employee
+        <where>
+            <if test="employeeId != null">
+                and employee_id = #{employeeId}
+            </if>
+            <if test="employeeName != null and employeeName != ''">
+                and employee_name = #{employeeName}
+            </if>
+            <if test="employeeSex != null">
+                and employee_sex = #{employeeSex}
+            </if>
+            <if test="employeeBirthday != null">
+                and employee_birthday = #{employeeBirthday}
+            </if>
+            <if test="employeeInductionTime != null">
+                and employee_induction_time = #{employeeInductionTime}
+            </if>
+            <if test="employeeNumber != null and employeeNumber != ''">
+                and employee_number = #{employeeNumber}
+            </if>
+            <if test="employeePhone != null and employeePhone != ''">
+                and employee_phone = #{employeePhone}
+            </if>
+            <if test="employeeStore != null and employeeStore != ''">
+                and employee_store = #{employeeStore}
+            </if>
+            <if test="employeePosition != null">
+                and employee_position = #{employeePosition}
+            </if>
+            <if test="employeePassword != null and employeePassword != ''">
+                and employee_password = #{employeePassword}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="employeeId" useGeneratedKeys="true">
+        insert into car.employee(employee_name, employee_sex, employee_birthday, employee_induction_time,
+                                 employee_number, employee_phone, employee_store, employee_position, employee_password)
+        values (#{employeeName}, #{employeeSex}, #{employeeBirthday}, #{employeeInductionTime}, #{employeeNumber},
+                #{employeePhone}, #{employeeStore}, #{employeePosition}, #{employeePassword})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update car.employee
+        <set>
+            <if test="employeeName != null and employeeName != ''">
+                employee_name = #{employeeName},
+            </if>
+            <if test="employeeSex != null">
+                employee_sex = #{employeeSex},
+            </if>
+            <if test="employeeBirthday != null">
+                employee_birthday = #{employeeBirthday},
+            </if>
+            <if test="employeeInductionTime != null">
+                employee_induction_time = #{employeeInductionTime},
+            </if>
+            <if test="employeeNumber != null and employeeNumber != ''">
+                employee_number = #{employeeNumber},
+            </if>
+            <if test="employeePhone != null and employeePhone != ''">
+                employee_phone = #{employeePhone},
+            </if>
+            <if test="employeeStore != null and employeeStore != ''">
+                employee_store = #{employeeStore},
+            </if>
+            <if test="employeePosition != null">
+                employee_position = #{employeePosition},
+            </if>
+            <if test="employeePassword != null and employeePassword != ''">
+                employee_password = #{employeePassword},
+            </if>
+        </set>
+        where employee_id = #{employeeId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from car.employee
+        where employee_id = #{employeeId}
+    </delete>
+
+    <!--通过name进行删除-->
+    <select id="findOneByEmployeeName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where employee_name = #{employeeName,jdbcType=VARCHAR}
+    </select>
+    <!--通过用户名和密码进行登录-->
+    <select id="findEmployeeByNameAbdPass" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where employee_name = #{username,jdbcType=VARCHAR}
+          and employee_password = #{password,jdbcType=VARCHAR}
+    </select>
+    <!--auto generated by MybatisCodeHelper on 2020-10-14-->
+    <select id="findOneByEmployeePhone" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+        where employee_phone = #{employeePhone,jdbcType=VARCHAR}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2020-10-16-->
+    <select id="findAllEmployee" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from employee
+    </select>
+
+    <select id="queryLikeAllEmp" resultMap="BaseResultMap">
+    SELECT
+     <include refid="Base_Column_List" />
+     FROM employee WHERE employee_name LIKE "%"#{information}"%" OR employee_number like "%"#{information}"%"OR employee_phone LIKE "%"#{information}"%"
+    </select>
+<!--auto generated by MybatisCodeHelper on 2020-10-31-->
+    <select id="findOneByEmployeeNumber" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from employee
+        where employee_number=#{employeeNumber,jdbcType=VARCHAR}
+    </select>
+</mapper>

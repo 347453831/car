@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车辆查询</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>车辆查询</h5>
+                </div>
+                <div class="col-sm-5 ibox-content">
+                    <form action="">
+                        <input type="text" placeholder="输入汽车品牌" style="height:30px;"/>&nbsp;&nbsp;
+                        <input type="text" placeholder="座位数" style="height:30px;width:100px"/>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-info"><i class="fa fa-search"></i>搜索</button>
+                    </form>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>车牌号</th>
+                            <th>车型</th>
+                            <th>乘车人数</th>
+                            <th>租用价格</th>
+                            <th>入库日期</th>
+                            <th>所属门店</th>
+                            <th>租赁状态</th>
+                            <th>车况</th>
+
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody th:if="${msg!=null}">
+                        <tr>
+                            <td th:colspan="8" style="text-align: center">暂无数据</td>
+                        </tr>
+                        </tbody>
+                        <tbody th:if="${vehicles!=null}">
+
+                        <tr th:each="vhe:${vehicles}">
+
+                            <td th:text="${vhe.getVehicleNum()}"></td>
+                            <td th:text="${vhe.getVehicleType()}"></td>
+                            <td th:text="${vhe.getVehiclePeoplenum()}"></td>
+                            <td th:text="${vhe.getVehiclePrice()}"></td>
+                            <td th:text="${vhe.getVehicleDate()}"></td>
+                            <td th:text="${vhe.getVehicleStore()}"></td>
+                            <td th:if="${vhe.getVehicleStatu()==0}">
+                                <span class="label label-warning">入库</span>
+                            </td>
+                            <td th:unless="${vhe.getVehicleStatu()==0}">
+                                <span class="label label-primary">租出</span>
+                            </td>
+                            <td th:if="${vhe.getVehicleSituation()==0}">
+                                <span class="label label-primary">正常
+                                </span>
+
+                            </td>
+                            <td th:unless="${vhe.getVehicleSituation()==0}">
+                                      <span class="label label-danger">车损
+                                </span>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-info" href="/vehicle/updVehicle" title="修改"><i
+                                        class="fa fa-pencil"></i></a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/vehicle/delOneVehicle(vheId=${vhe.getVehicleId()})}"
+                                   onClick="return confirm('确定删除?');" title="删除"><i class="fa fa-trash-o"></i></a>
+
+                                <a th:if="${vhe.getVehicleSituation()==1}" th:href="@{/vehicle/car_badPage(vehicleNum=${vhe.getVehicleNum()})}">
+                                    <span class="label label-primary">报损</span></a>
+                            </td>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-white">
+                            首页
+                        </button>
+                        <button type="button" class="btn btn-white">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-white active">1</button>
+                        <button class="btn btn-white">2</button>
+                        <button class="btn btn-white">3</button>
+                        <button class="btn btn-white">4</button>
+                        <button type="button" class="btn btn-white">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button type="button" class="btn btn-white">
+                            尾页
+                        </button>
+                    </div>
+                    &nbsp;&nbsp;第1页/共4页
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<!-- Data Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function () {
+        $('.dataTables-example').dataTable();
+
+        /* Init DataTables */
+        var oTable = $('#editable').dataTable();
+
+        /* Apply the jEditable handlers to the table */
+        oTable.$('td').editable('../example_ajax.php', {
+            "callback": function (sValue, y) {
+                var aPos = oTable.fnGetPosition(this);
+                oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            },
+            "submitdata": function (value, settings) {
+                return {
+                    "row_id": this.parentNode.getAttribute('id'),
+                    "column": oTable.fnGetPosition(this)[2]
+                };
+            },
+            "width": "90%",
+            "height": "100%"
+        });
+    });
+</script>
+</body>
+</html>

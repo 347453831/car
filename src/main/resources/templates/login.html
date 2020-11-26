@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平院租车系统 - 用户登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+</head>
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-left" style="font-size:21px;">
+                <i class="fa fa-car"></i>平院租车系统
+            </div>
+        </div>
+        <div class="col-sm-12 signup-footer">
+            <form method="post" action="/login">
+                <h4 class="no-margins">用户登录：</h4>
+                <input type="text" name="username" class="form-control uname" placeholder="用户名"/>
+                <input type="password" name="password" class="form-control pword m-b" placeholder="密码"/>
+                <label>
+                    <input type="checkbox" checked="checked"/>
+                    <span style="color: #333333;">记住登录状态</span>
+                </label>
+                <button type="submit" class="btn btn-success btn-block">登录</button>
+            </form>
+            <div class="container" th:if="${session.msg}!=null">
+                <script>
+                    alert("用户名或密码错误")
+                </script>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

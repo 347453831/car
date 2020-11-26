@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>员工查询</title>
+    <meta name="/keywords" content="">
+    <meta name="/description" content="">
+    <link rel="/shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>员工查询</h5>
+                </div>
+                <div class="col-sm-5 ibox-content">
+                    <form action="/employee/findEmpByLike" method="post">
+                        <input size="32" type="text" name="information" placeholder="请输入姓名或身份证号或手机号关键信息"
+                               style="height:30px;"/>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-info"><i class="fa fa-search"></i>搜索</button>
+                    </form>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>员工编号</th>
+                            <th>员工姓名</th>
+                            <th>性别</th>
+                            <th>出生年月</th>
+                            <th>入职日期</th>
+                            <th>身份证号</th>
+                            <th>手机号</th>
+                            <th>所属门店</th>
+                            <th>操作</th>
+                        </thead>
+                        <tbody th:if="${msg!=null}">
+                        <tr>
+                            <td th:colspan="8" style="text-align: center">暂无数据</td>
+                        </tr>
+                        </tbody>
+                        <tbody th:if="${employees!=null}">
+                        <tr th:each="emp:${employees}">
+                            <td th:text="${emp.getEmployeeId()}"></td>
+                            <td th:text="${emp.getEmployeeName()}"></td>
+                            <td th:if="${emp.getEmployeeSex()==0}">
+                                男
+                            </td>
+                            <td th:unless="${emp.getEmployeeSex()==0}">
+                                女
+                            </td>
+                            <td th:text="${#dates.format(emp.getEmployeeBirthday(),'yyyy-MM-dd')}"></td>
+                            <td th:text="${#dates.format(emp.getEmployeeInductionTime(),'yyyy-MM-dd')}"></td>
+                            <td th:text="${emp.getEmployeeNumber()}"></td>
+                            <td th:text="${emp.getEmployeePhone()}"></td>
+                            <td th:text="${emp.getEmployeeStore()}"></td>
+                            <td>
+                                <a class="btn btn-info" th:href="@{/employee/selOneById(empId=${emp.getEmployeeId()})}"
+                                   title="修改"><i class="fa fa-pencil"></i></a>
+                                <a class="btn btn-primary"
+                                   th:href="@{/employee/delOneEmpPage(empId=${emp.getEmployeeId()})}"
+                                   onClick="return confirm('确定删除?');" title="删除"><i
+                                        class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="btn-group">
+                        <a th:href="@{/employee/pagingSel}">
+                            <button type="button" class="btn btn-white">
+                                首页
+                            </button>
+                        </a>
+                        <tr th:if="${pageInfo.hasPreviousPage}">
+                            <a th:href="@{/employee/pagingSel(pageNum=${pageInfo.prePage})}">
+                                <button type="button" class="btn btn-white">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                            </a>
+                        </tr>
+                        <a th:href="@{/employee/pagingSel(pageNum=1)}" disabled='true'>
+                            <button class="btn btn-white active">1</button>
+                        </a>
+                        <a th:href="@{/employee/pagingSel(pageNum=2)}" disabled="false">
+                            <button class="btn btn-white">2</button>
+                        </a>
+                        <a th:href="@{/employee/pagingSel(pageNum=3)}">
+                            <button class="btn btn-white">3</button>
+                        </a>
+                        <a th:href="@{/employee/pagingSel(pageNum=4)}">
+                            <button class="btn btn-white">4</button>
+                        </a>
+                        <tr th:if="${pageInfo.hasNextPage}">
+                            <a th:href="@{/employee/pagingSel(pageNum=${pageInfo.nextPage})}">
+                                <button type="button" class="btn btn-white">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </a>
+                        </tr>
+                        <a th:href="@{/employee/pagingSel(pageNum=${pageInfo.navigateLastPage})}">
+                            <button type="button" class="btn btn-white">
+                                尾页
+                            </button>
+                        </a>
+                    </div>
+                    &nbsp;&nbsp;
+                    <span th:text="第+${pageInfo.pageNum}+页"></span>
+                    <span th:text="共+${pageInfo.pages}+页"></span>
+                    前往第
+                    <input size="5" type="text" id='number' class="btn btn-white" onblur="tiaozhuang();">
+                    页
+                    </input>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<!-- Data Tables -->
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!-- Page-Level Scripts -->
+<script>
+    function tiaozhuang() {
+        /*正则表达式
+        * 用来验证输入的内容是否为正整数
+        * */
+        var pattern = /-?[1-9]\d*/,
+            num = document.getElementById("number");
+        if (pattern.test(num.value)) {
+            location.href = "/employee/pagingSel?pageNum=" + num.value;
+        } else {
+            alert("请输入正整数")
+
+        }
+    }
+
+    $(document).ready(function () {
+        $('.dataTables-example').dataTable();
+
+        /* Init DataTables */
+        var oTable = $('#editable').dataTable();
+
+        /* Apply the jEditable handlers to the table */
+        oTable.$('td').editable('../example_ajax.php', {
+            "callback": function (sValue, y) {
+                var aPos = oTable.fnGetPosition(this);
+                oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            },
+            "submitdata": function (value, settings) {
+                return {
+                    "row_id": this.parentNode.getAttribute('id'),
+                    "column": oTable.fnGetPosition(this)[2]
+                };
+            },
+            "width": "90%",
+            "height": "100%"
+        });
+    });
+</script>
+</body>
+</html>

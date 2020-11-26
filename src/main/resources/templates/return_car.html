@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>归还车辆</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/plugins/chosen/chosen.css" rel="stylesheet">
+    <link href="/css/plugins/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+    <link href="/css/plugins/switchery/switchery.css" rel="stylesheet">
+    <link href="/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+    <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <link href="/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>归还车辆</h5>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm" action="/order/returnCar" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">订单号：</label>
+                            <div class="col-sm-8">
+	                                    <span class="help-block m-b-none">
+
+                                            <input readonly type="text" name="orderNo"
+                                                   th:value="${orderDetails.getOrderNo()}" size="16.5">
+										</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">租用车辆：</label>
+                            <div class="col-sm-8">
+	                                    <span class="help-block m-b-none">
+
+                                            <input readonly type="text" name="orderCar"
+                                                   th:value="${orderDetails.getOrderCar()}" size="16.5">
+										</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">会员：</label>
+                            <div class="col-sm-8">
+	                                	 <span class="help-block m-b-none">
+
+											<input size="16.5" readonly type="text" name="orderName"
+                                                   th:value="${orderDetails.getOrderName()}">
+										</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">电话：</label>
+                            <div class="col-sm-8">
+	                                	 <span class="help-block m-b-none">
+											<input size="16.5" readonly type="text" name="orderPhone"
+                                                   th:value="${orderDetails.getOrderPhone()}">
+
+										</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">取车时间：</label>
+                            <div class="col-sm-8">
+	                                	 <span class="help-block m-b-none">
+											<input size="16.5" readonly type="text" name="orderStarttime"
+                                                   th:value="${#dates.format(orderDetails.getOrderStarttime(),'yyyy-MM-dd')}">
+
+										</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">还车时间：</label>
+                            <div class="col-sm-8">
+	                                	 <span class="help-block m-b-none">
+											<input readonly type="text" name="orderEndtime"
+                                                   th:value="${#dates.format(orderDetails.getOrderEndtime(),'yyyy-MM-dd')}" size="16.5">
+
+										</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">取车门店：</label>
+                            <div class="col-sm-8">
+	                                	 <span class="help-block m-b-none">
+										<input readonly type="text" name="orderStores"
+                                               th:value="${orderDetails.getOrderStores()}" size="16.5">
+
+
+										</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">还车门店：</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="orderReturn"
+                                        style="height:35px;width:150px;">
+                                    <option>平院1号店</option>
+                                    <option>平院2号店</option>
+                                    <option>平院3号店</option>
+                                    <option>平院4号店</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车辆是否破损：</label>
+                            <div class="col-sm-8">
+                                <label><input type="radio" value=0 name="carStatus" checked="checked">否</label>&nbsp;&nbsp;
+                                <label><input type="radio" name="carStatus" value=1>是</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button class="btn btn-success" type="submit">还车</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<!-- 自定义js -->
+<script src="js/content.js?v=1.0.0"></script>
+<!-- jQuery Validation plugin javascript-->
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<!-- Chosen -->
+<script src="js/plugins/chosen/chosen.jquery.js"></script>
+<!-- JSKnob -->
+<script src="js/plugins/jsKnob/jquery.knob.js"></script>
+<!-- Input Mask-->
+<script src="js/plugins/jasny/jasny-bootstrap.min.js"></script>
+<!-- Data picker -->
+<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!-- Prettyfile -->
+<script src="js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+<!-- NouSlider -->
+<script src="js/plugins/nouslider/jquery.nouislider.min.js"></script>
+<!-- Switchery -->
+<script src="js/plugins/switchery/switchery.js"></script>
+<!-- IonRangeSlider -->
+<script src="js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+<!-- iCheck -->
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<!-- MENU -->
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<!-- Color picker -->
+<script src="js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+<!-- Clock picker -->
+<script src="js/plugins/clockpicker/clockpicker.js"></script>
+<!-- Image cropper -->
+<script src="js/plugins/cropper/cropper.min.js"></script>
+<script src="js/demo/form-advanced-demo.js"></script>
+</body>
+</html>
